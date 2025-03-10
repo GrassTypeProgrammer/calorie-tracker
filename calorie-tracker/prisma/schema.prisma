@@ -12,3 +12,12 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model FoodItem {
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  protein  Float  @default(0)
+  fat      Float  @default(0)
+  carbs    Float  @default(0)
+  calories Float  @default(0)
+}
