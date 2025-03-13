@@ -16,8 +16,8 @@ datasource db {
 model FoodItem {
   id       Int    @id @default(autoincrement())
   name     String @unique
-  protein  Float  @default(0)
-  fat      Float  @default(0)
-  carbs    Float  @default(0)
-  calories Float  @default(0)
+  protein  Float  
+  fat      Float  
+  carbs    Float  
+  calories Float  
 }
