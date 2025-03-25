@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Callout, TextField, Text } from '@radix-ui/themes';
+import { Button, Callout, TextField } from '@radix-ui/themes';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from "axios";
@@ -21,6 +21,18 @@ const NewItemPage = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setIsSubmitting(true);
+      await axios.post('/api/foodItem', data);
+      router.push('/items');
+    }
+    catch (error) {
+      setError('An unexpected error occurred.');
+      setIsSubmitting(false);
+    }
+  })
+
   return (
     <div className='max-w-xl'>
       {error &&
@@ -30,17 +42,7 @@ const NewItemPage = () => {
       }
       <form
         className='space-y-3'
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            setIsSubmitting(true);
-            await axios.post('/api/foodItem', data);
-            router.push('/items');
-          }
-          catch (error) {
-            setError('An unexpected error occurred.');
-            setIsSubmitting(false);
-          }
-        })}
+        onSubmit={onSubmit}
       >
         <ErrorMessage>{errors.name?.message}</ErrorMessage>
         <TextField.Root placeholder='Item Name' {...register('name')} />
