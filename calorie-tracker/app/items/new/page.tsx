@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { createFoodItemSchema } from '@/app/validationSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ErrorMessage from '@/app/components/errorMessage';
+import Spinner from '@/app/components/Spinner';
 
 type ItemForm = z.infer<typeof createFoodItemSchema>;
 
@@ -18,6 +19,7 @@ const NewItemPage = () => {
     resolver: zodResolver(createFoodItemSchema)
   });
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   return (
     <div className='max-w-xl'>
@@ -30,10 +32,13 @@ const NewItemPage = () => {
         className='space-y-3'
         onSubmit={handleSubmit(async (data) => {
           try {
+            setIsSubmitting(true);
             await axios.post('/api/foodItem', data);
             router.push('/items');
-          } catch (error) {
+          }
+          catch (error) {
             setError('An unexpected error occurred.');
+            setIsSubmitting(false);
           }
         })}
       >
@@ -53,7 +58,10 @@ const NewItemPage = () => {
         <ErrorMessage>{errors.calories?.message}</ErrorMessage>
         <TextField.Root placeholder='Calories' {...register('calories', { valueAsNumber: true })} />
 
-        <Button>Submit Item</Button>
+        <Button disabled={isSubmitting}>
+          Submit Item
+          {isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
 
