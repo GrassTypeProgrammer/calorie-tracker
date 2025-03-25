@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { createFoodItemSchema } from '@/app/validationSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import ErrorMessage from '@/app/components/errorMessage';
 
 type ItemForm = z.infer<typeof createFoodItemSchema>;
 
@@ -36,23 +37,20 @@ const NewItemPage = () => {
           }
         })}
       >
-        {errors.name && <Text color='red'>{errors.name.message}</Text>}
+        <ErrorMessage>{errors.name?.message}</ErrorMessage>
         <TextField.Root placeholder='Item Name' {...register('name')} />
 
         {/* <TextField.Root placeholder='Weight in grams'{...register('weight', {valueAsNumber: true})} /> */}
-        {errors.protein && <Text color='red'>{errors.protein.message}</Text>}
+        <ErrorMessage>{errors.protein?.message}</ErrorMessage>
         <TextField.Root placeholder='Protein' {...register('protein', { valueAsNumber: true })} />
 
-        {errors.carbs && <Text color='red'>{errors.carbs.message}</Text>}
+        <ErrorMessage>{errors.carbs?.message}</ErrorMessage>
         <TextField.Root placeholder='Carbs' {...register('carbs', { valueAsNumber: true })} />
 
-        {errors.fat && <Text color='red'>{errors.fat.message}</Text>}
+        <ErrorMessage>{errors.fat?.message}</ErrorMessage>
         <TextField.Root placeholder='Fat' {...register('fat', { valueAsNumber: true })} />
 
-        {errors.calories &&
-          <Text color='red' as='p'>
-            {errors.calories.message}
-          </Text>}
+        <ErrorMessage>{errors.calories?.message}</ErrorMessage>
         <TextField.Root placeholder='Calories' {...register('calories', { valueAsNumber: true })} />
 
         <Button>Submit Item</Button>
