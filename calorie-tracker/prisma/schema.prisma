@@ -16,8 +16,24 @@ datasource db {
 model FoodItem {
   id       Int    @id @default(autoincrement())
   name     String @unique
-  protein  Float  
-  fat      Float  
-  carbs    Float  
-  calories Float  
+  protein  Float
+  fat      Float
+  carbs    Float
+  calories Float
 }
+
+model FoodEntry {
+  id       Int       @id
+  foodItem Int
+  Day      Day?      @relation(fields: [dayId], references: [id])
+  dayId    DateTime?
+}
+
+model Day {
+  id      DateTime    @id @default(now())
+  entries FoodEntry[]
+}
+
+// Two options: 
+// Food entry, and all entries have food type and date.
+// Page, which represents a day. This has an array of food items consumed that day.

@@ -1,0 +1,24 @@
+-- AlterTable
+ALTER TABLE `FoodItem` ALTER COLUMN `protein` DROP DEFAULT,
+    ALTER COLUMN `fat` DROP DEFAULT,
+    ALTER COLUMN `carbs` DROP DEFAULT,
+    ALTER COLUMN `calories` DROP DEFAULT;
+
+-- CreateTable
+CREATE TABLE `FoodEntry` (
+    `id` INTEGER NOT NULL,
+    `foodItem` INTEGER NOT NULL,
+    `dayId` DATETIME(3) NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Day` (
+    `id` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `FoodEntry` ADD CONSTRAINT `FoodEntry_dayId_fkey` FOREIGN KEY (`dayId`) REFERENCES `Day`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
