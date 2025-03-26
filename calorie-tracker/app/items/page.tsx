@@ -6,7 +6,6 @@ import React from 'react'
 const Items = async () => {
     const items = await prisma.foodItem.findMany();
 
-
     return (
         <div>
             <div className='mb-5'>

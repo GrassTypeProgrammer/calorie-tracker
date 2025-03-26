@@ -16,8 +16,8 @@ const Navbar = () => {
 
     const links: LinkData[] = [
         { href: '/', label: 'Home' },
-        { href: '/calories', label: 'Calories' },
         { href: '/items', label: 'Items' },
+        { href: '/tracker', label: 'Calorie Tracker' },
     ];
 
     return (
