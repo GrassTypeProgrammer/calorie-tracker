@@ -1,20 +1,16 @@
 import { prisma } from '@/prisma/client'
-import { Button, Table } from '@radix-ui/themes'
-import Link from 'next/link'
+import { Table } from '@radix-ui/themes'
 import React from 'react'
+import ItemToolbar from './ItemToolbar'
+// import delay from 'delay'
 
 const Items = async () => {
     const items = await prisma.foodItem.findMany();
+    // await delay(2000);
 
     return (
         <div>
-            <div className='mb-5'>
-                <Button>
-                    <Link href='/items/new'>
-                        New Food Item
-                    </Link>
-                </Button>
-            </div>
+            <ItemToolbar />
 
             {/* <div className='flex gap-5 mb-5 justify-end pr-5'>
                 <Text className='flex flex-row gap-1' as='label' size='2'>
